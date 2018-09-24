@@ -3,7 +3,7 @@ export default Polygon;
 import { inherits } from './util.js';
 
 import Geometry from './geometry.js';
-import Types from './types.js';
+import * as Types from './types.js';
 import Point from './point.js';
 import BinaryWriter from './binarywriter.js';
 

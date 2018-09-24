@@ -1,6 +1,6 @@
 export default WktParser;
 
-import Types from './types.js';
+import * as Types from './types.js';
 import Point from './point.js';
 
 function WktParser(value) {

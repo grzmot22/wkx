@@ -1,4 +1,4 @@
-import ZigZag from '../src/zigzag';
+import * as ZigZag from '../src/zigzag';
 
 import assert from 'assert';
 

@@ -3,9 +3,9 @@ export default Point;
 import { inherits } from './util.js';
 
 import Geometry from './geometry.js';
-import Types from './types.js';
+import * as Types from './types.js';
 import BinaryWriter from './binarywriter.js';
-import ZigZag from './zigzag.js';
+import * as ZigZag from './zigzag.js';
 
 function Point(x, y, z, m, srid) {
     Geometry.call(this);

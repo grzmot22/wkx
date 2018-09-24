@@ -1,6 +1,6 @@
 export default Geometry;
 
-import Types from './types.js';
+import * as Types from './types.js';
 import Point from './point.js';
 import LineString from './linestring.js';
 import Polygon from './polygon.js';
@@ -11,7 +11,7 @@ import GeometryCollection from './geometrycollection.js';
 import BinaryReader from './binaryreader.js';
 import BinaryWriter from './binarywriter.js';
 import WktParser from './wktparser.js';
-import ZigZag from './zigzag.js';
+import * as ZigZag from './zigzag.js';
 
 function Geometry() {
     this.srid = undefined;

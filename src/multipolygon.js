@@ -2,7 +2,7 @@ export default MultiPolygon;
 
 import { inherits } from './util.js';
 
-import Types from './types.js';
+import * as Types from './types.js';
 import Geometry from './geometry.js';
 import Point from './point.js';
 import Polygon from './polygon.js';

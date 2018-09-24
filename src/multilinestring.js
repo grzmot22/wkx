@@ -2,7 +2,7 @@ export default MultiLineString;
 
 import { inherits } from './util.js';
 
-import Types from './types.js';
+import * as Types from './types.js';
 import Geometry from './geometry.js';
 import Point from './point.js';
 import LineString from './linestring.js';

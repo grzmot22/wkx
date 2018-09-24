@@ -1,8 +1,7 @@
-export default {
-    encode: function (value) {
-        return (value << 1) ^ (value >> 31);
-    },
-    decode: function (value) {
-        return (value >> 1) ^ (-(value & 1));
-    }
-};
+export function encode (value) {
+    return (value << 1) ^ (value >> 31);
+}
+
+export function decode (value) {
+    return (value >> 1) ^ (-(value & 1));
+}
