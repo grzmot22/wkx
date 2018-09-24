@@ -1,4 +1,4 @@
-export { default as Types } from './types.js';
+export * from './types.js';
 export { default as Geometry } from './geometry.js';
 export { default as Point } from './point.js';
 export { default as LineString } from './linestring.js';
