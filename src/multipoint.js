@@ -1,6 +1,6 @@
 export default MultiPoint;
 
-import util from 'util';
+import { inherits } from './util.js';
 
 import Types from './types.js';
 import Geometry from './geometry.js';
@@ -19,7 +19,7 @@ function MultiPoint(points, srid) {
     }
 }
 
-util.inherits(MultiPoint, Geometry);
+inherits(MultiPoint, Geometry);
 
 MultiPoint.Z = function (points, srid) {
     var multiPoint = new MultiPoint(points, srid);

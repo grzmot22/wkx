@@ -1,6 +1,6 @@
 export default Polygon;
 
-import util from 'util';
+import { inherits } from './util.js';
 
 import Geometry from './geometry.js';
 import Types from './types.js';
@@ -20,7 +20,7 @@ function Polygon(exteriorRing, interiorRings, srid) {
     }
 }
 
-util.inherits(Polygon, Geometry);
+inherits(Polygon, Geometry);
 
 Polygon.Z = function (exteriorRing, interiorRings, srid) {
     var polygon = new Polygon(exteriorRing, interiorRings, srid);

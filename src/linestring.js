@@ -1,6 +1,6 @@
 export default LineString;
 
-import util from 'util';
+import { inherits } from './util.js';
 
 import Geometry from './geometry.js';
 import Types from './types.js';
@@ -19,7 +19,7 @@ function LineString(points, srid) {
     }
 }
 
-util.inherits(LineString, Geometry);
+inherits(LineString, Geometry);
 
 LineString.Z = function (points, srid) {
     var lineString = new LineString(points, srid);

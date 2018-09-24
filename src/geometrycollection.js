@@ -1,6 +1,6 @@
 export default GeometryCollection;
 
-import util from 'util';
+import { inherits } from './util.js';
 
 import Types from './types.js';
 import Geometry from './geometry.js';
@@ -18,7 +18,7 @@ function GeometryCollection(geometries, srid) {
     }
 }
 
-util.inherits(GeometryCollection, Geometry);
+inherits(GeometryCollection, Geometry);
 
 GeometryCollection.Z = function (geometries, srid) {
     var geometryCollection = new GeometryCollection(geometries, srid);

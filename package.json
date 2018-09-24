@@ -2,7 +2,8 @@
   "name": "wkx",
   "version": "0.4.5",
   "description": "A WKT/WKB/EWKT/EWKB/TWKB/GeoJSON parser and serializer",
-  "main": "lib/wkx.js",
+  "main": "dist/wkx.js",
+  "module": "dist/wkx.esm.js",
   "types": "lib/wkx.d.ts",
   "files": [
     "dist/",
@@ -26,6 +27,7 @@
     "mkdirp": "^0.5.1",
     "mocha": "^5.1.1",
     "pg": "^7.4.3",
+    "rollup": "^0.66.2",
     "uglify-js": "^3.3.24"
   },
   "repository": {

@@ -11,7 +11,7 @@ import GeometryCollection from './geometrycollection.js';
 import BinaryReader from './binaryreader.js';
 import BinaryWriter from './binarywriter.js';
 import WktParser from './wktparser.js';
-var ZigZag = require('./zigzag.js');
+import ZigZag from './zigzag.js';
 
 function Geometry() {
     this.srid = undefined;

@@ -1,6 +1,6 @@
 export default MultiLineString;
 
-import util from 'util';
+import { inherits } from './util.js';
 
 import Types from './types.js';
 import Geometry from './geometry.js';
@@ -20,7 +20,7 @@ function MultiLineString(lineStrings, srid) {
     }
 }
 
-util.inherits(MultiLineString, Geometry);
+inherits(MultiLineString, Geometry);
 
 MultiLineString.Z = function (lineStrings, srid) {
     var multiLineString = new MultiLineString(lineStrings, srid);

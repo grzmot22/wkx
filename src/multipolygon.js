@@ -1,6 +1,6 @@
 export default MultiPolygon;
 
-import util from 'util';
+import { inherits } from './util.js';
 
 import Types from './types.js';
 import Geometry from './geometry.js';
@@ -20,7 +20,7 @@ function MultiPolygon(polygons, srid) {
     }
 }
 
-util.inherits(MultiPolygon, Geometry);
+inherits(MultiPolygon, Geometry);
 
 MultiPolygon.Z = function (polygons, srid) {
     var multiPolygon = new MultiPolygon(polygons, srid);
