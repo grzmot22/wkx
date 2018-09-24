@@ -1,6 +1,6 @@
 export function inherits(ctor, superCtor) {
     // implementation from standard node.js 'util' module
-    ctor.super_ = superCtor
+    ctor.super_ = superCtor;
     ctor.prototype = Object.create(superCtor.prototype, {
         constructor: {
             value: ctor,
@@ -9,4 +9,4 @@ export function inherits(ctor, superCtor) {
             configurable: true
         }
     });
-};
+}

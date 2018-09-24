@@ -1,15 +1,17 @@
 /* jshint evil: true, unused: false */
 
-var eql = require('deep-eql');
+import eql from 'deep-eql';
 
-var Geometry = require('../lib/geometry');
-var Point = require('../lib/point');
-var LineString = require('../lib/linestring');
-var Polygon = require('../lib/polygon');
-var MultiPoint = require('../lib/multipoint');
-var MultiLineString = require('../lib/multilinestring');
-var MultiPolygon = require('../lib/multipolygon');
-var GeometryCollection = require('../lib/geometrycollection');
+import {
+    Geometry,
+    GeometryCollection,
+    LineString,
+    MultiLineString,
+    MultiPoint,
+    MultiPolygon,
+    Point,
+    Polygon
+} from '../dist/wkx.js';
 
 var tests = {
     '2D': require('./testdata.json'),
@@ -18,7 +20,7 @@ var tests = {
     'ZM': require('./testdataZM.json')
 };
 
-var assert = require('assert');
+import assert from 'assert';
 
 function assertParseWkt(data) {
     assert(eql(Geometry.parse(data.wkt), eval(data.geometry)));

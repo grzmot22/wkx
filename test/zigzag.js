@@ -1,6 +1,6 @@
-var ZigZag = require('../lib/zigzag');
+import ZigZag from '../src/zigzag';
 
-var assert = require('assert');
+import assert from 'assert';
 
 describe('wkx', function () {
     describe('ZigZag', function () {

@@ -10,5 +10,6 @@
 	"smarttabs": false,
 	"maxlen": 120,
 	"undef": true,
-	"unused": true
+	"unused": true,
+	"esversion": 6
 }
