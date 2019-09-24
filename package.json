@@ -20,16 +20,17 @@
   "license": "MIT",
   "devDependencies": {
     "async": "^3.1.0",
-    "browserify": "^16.3.0",
-    "coveralls": "^3.0.5",
+    "coveralls": "^3.0.1",
     "deep-eql": "^4.0.0",
+    "esm": "^3.2.25",
     "istanbul": "^0.4.5",
-    "jshint": "^2.10.2",
+    "jshint": "^2.9.5",
     "json-stringify-pretty-compact": "^2.0.0",
     "mkdirp": "^0.5.1",
     "mocha": "^6.2.0",
-    "pg": "^7.12.0",
-    "uglify-js": "^3.6.0"
+    "pg": "^7.12.1",
+    "rollup": "^1.21.4",
+    "terser": "^4.3.2"
   },
   "repository": {
     "type": "git",
@@ -48,6 +49,7 @@
     "spatial"
   ],
   "dependencies": {
-    "@types/node": "*"
+    "@types/node": "^12.7.5",
+    "buffer": "^5.4.3"
   }
 }

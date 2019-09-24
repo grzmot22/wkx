@@ -12,7 +12,7 @@ function Polygon(exteriorRing, interiorRings, srid) {
 
     this.exteriorRing = exteriorRing || [];
     this.interiorRings = interiorRings || [];
-	this.srid = srid;
+    this.srid = srid;
 
     if (this.exteriorRing.length > 0) {
         this.hasZ = this.exteriorRing[0].hasZ;
@@ -22,38 +22,40 @@ function Polygon(exteriorRing, interiorRings, srid) {
 
 inherits(Polygon, Geometry);
 
-Polygon.Z = function (exteriorRing, interiorRings, srid) {
+Polygon.Z = function(exteriorRing, interiorRings, srid) {
     var polygon = new Polygon(exteriorRing, interiorRings, srid);
     polygon.hasZ = true;
     return polygon;
 };
 
-Polygon.M = function (exteriorRing, interiorRings, srid) {
+Polygon.M = function(exteriorRing, interiorRings, srid) {
     var polygon = new Polygon(exteriorRing, interiorRings, srid);
     polygon.hasM = true;
     return polygon;
 };
 
-Polygon.ZM = function (exteriorRing, interiorRings, srid) {
+Polygon.ZM = function(exteriorRing, interiorRings, srid) {
     var polygon = new Polygon(exteriorRing, interiorRings, srid);
     polygon.hasZ = true;
     polygon.hasM = true;
     return polygon;
 };
 
-Polygon._parseWkt = function (value, options) {
+Polygon._parseWkt = function(value, options) {
     var polygon = new Polygon();
     polygon.srid = options.srid;
     polygon.hasZ = options.hasZ;
     polygon.hasM = options.hasM;
 
-    if (value.isMatch(['EMPTY']))
-        return polygon;
+    if (value.isMatch(['EMPTY'])) return polygon;
 
     value.expectGroupStart();
 
     value.expectGroupStart();
-    polygon.exteriorRing.push.apply(polygon.exteriorRing, value.matchCoordinates(options));
+    polygon.exteriorRing.push.apply(
+        polygon.exteriorRing,
+        value.matchCoordinates(options)
+    );
     value.expectGroupEnd();
 
     while (value.isMatch([','])) {
@@ -67,7 +69,7 @@ Polygon._parseWkt = function (value, options) {
     return polygon;
 };
 
-Polygon._parseWkb = function (value, options) {
+Polygon._parseWkb = function(value, options) {
     var polygon = new Polygon();
     polygon.srid = options.srid;
     polygon.hasZ = options.hasZ;
@@ -96,20 +98,26 @@ Polygon._parseWkb = function (value, options) {
     return polygon;
 };
 
-Polygon._parseTwkb = function (value, options) {
+Polygon._parseTwkb = function(value, options) {
     var polygon = new Polygon();
     polygon.hasZ = options.hasZ;
     polygon.hasM = options.hasM;
 
-    if (options.isEmpty)
-        return polygon;
+    if (options.isEmpty) return polygon;
 
-    var previousPoint = new Point(0, 0, options.hasZ ? 0 : undefined, options.hasM ? 0 : undefined);
+    var previousPoint = new Point(
+        0,
+        0,
+        options.hasZ ? 0 : undefined,
+        options.hasM ? 0 : undefined
+    );
     var ringCount = value.readVarInt();
     var exteriorRingCount = value.readVarInt();
 
     for (var i = 0; i < exteriorRingCount; i++)
-        polygon.exteriorRing.push(Point._readTwkbPoint(value, options, previousPoint));
+        polygon.exteriorRing.push(
+            Point._readTwkbPoint(value, options, previousPoint)
+        );
 
     for (i = 1; i < ringCount; i++) {
         var interiorRing = [];
@@ -117,7 +125,9 @@ Polygon._parseTwkb = function (value, options) {
         var interiorRingCount = value.readVarInt();
 
         for (var j = 0; j < interiorRingCount; j++)
-            interiorRing.push(Point._readTwkbPoint(value, options, previousPoint));
+            interiorRing.push(
+                Point._readTwkbPoint(value, options, previousPoint)
+            );
 
         polygon.interiorRings.push(interiorRing);
     }
@@ -125,35 +135,38 @@ Polygon._parseTwkb = function (value, options) {
     return polygon;
 };
 
-Polygon._parseGeoJSON = function (value) {
+Polygon._parseGeoJSON = function(value) {
     var polygon = new Polygon();
 
     if (value.coordinates.length > 0 && value.coordinates[0].length > 0)
         polygon.hasZ = value.coordinates[0][0].length > 2;
 
     for (var i = 0; i < value.coordinates.length; i++) {
-        if (i > 0)
-            polygon.interiorRings.push([]);
+        if (i > 0) polygon.interiorRings.push([]);
 
-        for (var j = 0; j  < value.coordinates[i].length; j++) {
+        for (var j = 0; j < value.coordinates[i].length; j++) {
             if (i === 0)
-                polygon.exteriorRing.push(Point._readGeoJSONPoint(value.coordinates[i][j]));
+                polygon.exteriorRing.push(
+                    Point._readGeoJSONPoint(value.coordinates[i][j])
+                );
             else
-                polygon.interiorRings[i - 1].push(Point._readGeoJSONPoint(value.coordinates[i][j]));
+                polygon.interiorRings[i - 1].push(
+                    Point._readGeoJSONPoint(value.coordinates[i][j])
+                );
         }
     }
 
     return polygon;
 };
 
-Polygon.prototype.toWkt = function () {
+Polygon.prototype.toWkt = function() {
     if (this.exteriorRing.length === 0)
         return this._getWktType(Types.wkt.Polygon, true);
 
     return this._getWktType(Types.wkt.Polygon, false) + this._toInnerWkt();
 };
 
-Polygon.prototype._toInnerWkt = function () {
+Polygon.prototype._toInnerWkt = function() {
     var innerWkt = '((';
 
     for (var i = 0; i < this.exteriorRing.length; i++)
@@ -178,7 +191,7 @@ Polygon.prototype._toInnerWkt = function () {
     return innerWkt;
 };
 
-Polygon.prototype.toWkb = function (parentOptions) {
+Polygon.prototype.toWkb = function(parentOptions) {
     var wkb = new BinaryWriter(this._getWkbSize());
 
     wkb.writeInt8(1);
@@ -188,8 +201,7 @@ Polygon.prototype.toWkb = function (parentOptions) {
     if (this.exteriorRing.length > 0) {
         wkb.writeUInt32LE(1 + this.interiorRings.length);
         wkb.writeUInt32LE(this.exteriorRing.length);
-    }
-    else {
+    } else {
         wkb.writeUInt32LE(0);
     }
 
@@ -206,7 +218,7 @@ Polygon.prototype.toWkb = function (parentOptions) {
     return wkb.buffer;
 };
 
-Polygon.prototype.toTwkb = function () {
+Polygon.prototype.toTwkb = function() {
     var twkb = new BinaryWriter(0, true);
 
     var precision = Geometry.getTwkbPrecision(5, 0, 0);
@@ -221,39 +233,45 @@ Polygon.prototype.toTwkb = function () {
 
         var previousPoint = new Point(0, 0, 0, 0);
         for (var i = 0; i < this.exteriorRing.length; i++)
-            this.exteriorRing[i]._writeTwkbPoint(twkb, precision, previousPoint);
+            this.exteriorRing[i]._writeTwkbPoint(
+                twkb,
+                precision,
+                previousPoint
+            );
 
         for (i = 0; i < this.interiorRings.length; i++) {
             twkb.writeVarInt(this.interiorRings[i].length);
 
             for (var j = 0; j < this.interiorRings[i].length; j++)
-                this.interiorRings[i][j]._writeTwkbPoint(twkb, precision, previousPoint);
+                this.interiorRings[i][j]._writeTwkbPoint(
+                    twkb,
+                    precision,
+                    previousPoint
+                );
         }
     }
 
     return twkb.buffer;
 };
 
-Polygon.prototype._getWkbSize = function () {
+Polygon.prototype._getWkbSize = function() {
     var coordinateSize = 16;
 
-    if (this.hasZ)
-        coordinateSize += 8;
-    if (this.hasM)
-        coordinateSize += 8;
+    if (this.hasZ) coordinateSize += 8;
+    if (this.hasM) coordinateSize += 8;
 
     var size = 1 + 4 + 4;
 
     if (this.exteriorRing.length > 0)
-        size += 4 + (this.exteriorRing.length * coordinateSize);
+        size += 4 + this.exteriorRing.length * coordinateSize;
 
     for (var i = 0; i < this.interiorRings.length; i++)
-        size += 4 + (this.interiorRings[i].length * coordinateSize);
+        size += 4 + this.interiorRings[i].length * coordinateSize;
 
     return size;
 };
 
-Polygon.prototype.toGeoJSON = function (options) {
+Polygon.prototype.toGeoJSON = function(options) {
     var geoJSON = Geometry.prototype.toGeoJSON.call(this, options);
     geoJSON.type = Types.geoJSON.Polygon;
     geoJSON.coordinates = [];
@@ -263,9 +281,16 @@ Polygon.prototype.toGeoJSON = function (options) {
 
         for (var i = 0; i < this.exteriorRing.length; i++) {
             if (this.hasZ)
-                exteriorRing.push([this.exteriorRing[i].x, this.exteriorRing[i].y, this.exteriorRing[i].z]);
+                exteriorRing.push([
+                    this.exteriorRing[i].x,
+                    this.exteriorRing[i].y,
+                    this.exteriorRing[i].z
+                ]);
             else
-                exteriorRing.push([this.exteriorRing[i].x, this.exteriorRing[i].y]);
+                exteriorRing.push([
+                    this.exteriorRing[i].x,
+                    this.exteriorRing[i].y
+                ]);
         }
 
         geoJSON.coordinates.push(exteriorRing);
@@ -276,9 +301,16 @@ Polygon.prototype.toGeoJSON = function (options) {
 
         for (var k = 0; k < this.interiorRings[j].length; k++) {
             if (this.hasZ)
-                interiorRing.push([this.interiorRings[j][k].x, this.interiorRings[j][k].y, this.interiorRings[j][k].z]);
+                interiorRing.push([
+                    this.interiorRings[j][k].x,
+                    this.interiorRings[j][k].y,
+                    this.interiorRings[j][k].z
+                ]);
             else
-                interiorRing.push([this.interiorRings[j][k].x, this.interiorRings[j][k].y]);
+                interiorRing.push([
+                    this.interiorRings[j][k].x,
+                    this.interiorRings[j][k].y
+                ]);
         }
 
         geoJSON.coordinates.push(interiorRing);
